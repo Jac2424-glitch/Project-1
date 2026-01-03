@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BukoHati | Sejuk Di Tekak, Cair di Hati</title>
+    <title>BukoHati | Premium Handcrafted Desserts</title>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Sacramento&display=swap" rel="stylesheet">
@@ -191,7 +191,7 @@
             background: white;
             padding: 50px;
             border-radius: 40px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         .ai-container h2 {
@@ -226,6 +226,53 @@
             text-align: left;
             border-left: 5px solid var(--accent-pink);
             animation: fadeIn 0.5s ease;
+        }
+
+        /* 🎮 GAME SECTION */
+        .game-section {
+            padding: 100px 8%;
+            text-align: center;
+        }
+
+        .game-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            background: #fff;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 8px solid var(--soft-pink);
+        }
+
+        #game-canvas {
+            background: linear-gradient(to bottom, #e0f2f1, #ffffff);
+            width: 100%;
+            height: 400px;
+            border-radius: 15px;
+            cursor: none;
+            display: block;
+        }
+
+        .game-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: var(--primary-green);
+            font-size: 1.2rem;
         }
 
         /* MENU SECTION */
@@ -346,7 +393,7 @@
         <div class="nav-links">
             <a href="#home">Home</a>
             <a href="#menu">Menu</a>
-            <a href="#ai-matchmaker">✨ Matchmaker</a>
+            <a href="#game">Mini Game</a>
             <a href="https://wa.me/60168079106" target="_blank" class="cta-pill">Order Online</a>
         </div>
         <div class="menu-toggle"><i data-lucide="menu"></i></div>
@@ -361,8 +408,8 @@
                     <script async src="//www.instagram.com/embed.js"></script>
                 </div>
                 <div class="hero-text animate__animated animate__fadeInRight">
-                    <span class="script-text">The Original Refreshment</span>
-                    <h1>PUREST <br>BUKO MAGIC</h1>
+                    <span class="script-text">Sejuk di Tekak, Cair di Hati</span>
+                    <h1>BUKO<br>HATI</h1>
                     <p>Escape into a world of creamy pandan bliss. We use traditional recipes and premium ingredients to bring you the finest Buko experience.</p>
                     <div style="display: flex; gap: 20px;">
                         <a href="#ai-matchmaker" class="cta-pill" style="text-decoration: none; margin-left: 0 !important;">Find My Flavor ✨</a>
@@ -375,13 +422,42 @@
         <section id="ai-matchmaker" class="ai-section">
             <div class="ai-container reveal">
                 <h2>✨ Flavor Matchmaker</h2>
-                <p style="margin-bottom: 30px; color: var(--text-muted);">Tell us how your day is going or what you're craving, and we will will pick your perfect Buko!</p>
+                <p style="margin-bottom: 30px; color: var(--text-muted);">Tell us how your day is going or what you're craving, and our AI will pick your perfect Buko!</p>
                 <textarea id="user-mood-input" placeholder="E.g. It's a hot sunny day and I want something floral..." rows="3"></textarea>
                 <button id="match-btn" class="cta-pill" style="margin: 0;">✨ Match Me!</button>
                 
                 <div id="ai-response">
                     <h4 id="match-title" style="color: var(--primary-green); margin-bottom: 10px;">Your Perfect Match:</h4>
                     <p id="match-text"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🎮 MINI GAME SECTION -->
+        <section id="game" class="game-section">
+            <div class="reveal">
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--primary-green); margin-bottom: 10px;">Buko Catch!</h2>
+                <p style="color: var(--text-muted); margin-bottom: 40px;">Catch the ingredients, avoid the salt! Reach 50 points for a virtual high-five. 🥥</p>
+                
+                <div class="game-container">
+                    <div class="game-stats">
+                        <span>Score: <span id="game-score">0</span></span>
+                        <span>High Score: <span id="high-score">0</span></span>
+                    </div>
+                    
+                    <canvas id="game-canvas"></canvas>
+                    
+                    <div id="game-start-screen" class="game-overlay">
+                        <span style="font-size: 4rem; margin-bottom: 20px;">🥥</span>
+                        <h3 style="margin-bottom: 20px;">Ready to Catch?</h3>
+                        <button id="start-game-btn" class="cta-pill" style="margin: 0;">Start Game</button>
+                    </div>
+
+                    <div id="game-over-screen" class="game-overlay" style="display: none;">
+                        <h3 style="color: var(--accent-pink); font-size: 2rem; margin-bottom: 10px;">Game Over!</h3>
+                        <p id="final-score-text" style="margin-bottom: 20px;">You caught 0 ingredients.</p>
+                        <button id="restart-game-btn" class="cta-pill" style="margin: 0;">Play Again</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -498,9 +574,141 @@
             matchBtn.innerHTML = '✨ Match Me!';
             matchBtn.disabled = false;
 
-            // Optional: Scroll to results
             responseDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         });
+
+        // 🎮 GAME LOGIC
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('game-score');
+        const highScoreEl = document.getElementById('high-score');
+        const startScreen = document.getElementById('game-start-screen');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        const finalScoreText = document.getElementById('final-score-text');
+
+        let score = 0;
+        let highScore = 0;
+        let gameActive = false;
+        let basket = { x: 0, y: 0, w: 80, h: 20 };
+        let items = [];
+        let animationId;
+
+        function initGame() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            basket.y = canvas.height - 40;
+            basket.x = canvas.width / 2 - basket.w / 2;
+        }
+
+        function createItem() {
+            const types = [
+                { emoji: '🥥', points: 5, speed: 2 },
+                { emoji: '🍃', points: 10, speed: 3 },
+                { emoji: '🍒', points: 5, speed: 2 },
+                { emoji: '🍓', points: 5, speed: 2 },
+                { emoji: '🧂', points: -15, speed: 4, isBad: true }
+            ];
+            const type = types[Math.floor(Math.random() * types.length)];
+            items.push({
+                x: Math.random() * (canvas.width - 30),
+                y: -30,
+                ...type
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Basket (Bowl)
+            ctx.fillStyle = '#3D6137';
+            ctx.beginPath();
+            ctx.roundRect(basket.x, basket.y, basket.w, basket.h, 10);
+            ctx.fill();
+            ctx.fillStyle = '#fff';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('BUKO BOWL', basket.x + basket.w/2, basket.y + 14);
+
+            // Draw & Update Items
+            for (let i = items.length - 1; i >= 0; i--) {
+                const item = items[i];
+                item.y += item.speed;
+
+                ctx.font = '30px Arial';
+                ctx.fillText(item.emoji, item.x, item.y);
+
+                // Collision Check
+                if (item.y + 10 >= basket.y && item.y <= basket.y + basket.h && 
+                    item.x + 20 >= basket.x && item.x <= basket.x + basket.w) {
+                    score += item.points;
+                    if (score < 0) score = 0;
+                    scoreEl.innerText = score;
+                    items.splice(i, 1);
+                    
+                    if (item.isBad) {
+                        endGame();
+                    }
+                    continue;
+                }
+
+                // Remove if off screen
+                if (item.y > canvas.height) {
+                    items.splice(i, 1);
+                }
+            }
+
+            if (gameActive) {
+                if (Math.random() < 0.03) createItem();
+                animationId = requestAnimationFrame(draw);
+            }
+        }
+
+        function startGame() {
+            score = 0;
+            items = [];
+            gameActive = true;
+            scoreEl.innerText = '0';
+            startScreen.style.display = 'none';
+            gameOverScreen.style.display = 'none';
+            draw();
+        }
+
+        function endGame() {
+            gameActive = false;
+            cancelAnimationFrame(animationId);
+            if (score > highScore) {
+                highScore = score;
+                highScoreEl.innerText = highScore;
+            }
+            finalScoreText.innerText = `You caught ${score} points worth of ingredients!`;
+            gameOverScreen.style.display = 'flex';
+        }
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const root = document.documentElement;
+            const mouseX = e.clientX - rect.left;
+            basket.x = mouseX - basket.w / 2;
+            
+            // Boundary checks
+            if (basket.x < 0) basket.x = 0;
+            if (basket.x > canvas.width - basket.w) basket.x = canvas.width - basket.w;
+        });
+
+        // Touch support
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const touchX = e.touches[0].clientX - rect.left;
+            basket.x = touchX - basket.w / 2;
+            if (basket.x < 0) basket.x = 0;
+            if (basket.x > canvas.width - basket.w) basket.x = canvas.width - basket.w;
+        }, { passive: false });
+
+        document.getElementById('start-game-btn').addEventListener('click', startGame);
+        document.getElementById('restart-game-btn').addEventListener('click', startGame);
+        window.addEventListener('resize', initGame);
+        initGame();
 
         // UI Effects
         window.onscroll = function() {
@@ -516,5 +724,4 @@
         window.dispatchEvent(new Event('scroll'));
     </script>
 </body>
-
 </html>
